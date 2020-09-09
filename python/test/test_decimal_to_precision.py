@@ -98,6 +98,7 @@ assert number_to_string(7.35946e21) == '7359460000000000000000'
 assert number_to_string(0.00000001) == '0.00000001'
 assert number_to_string(1e-7) == '0.0000001'
 assert number_to_string(-1e-7) == '-0.0000001'
+assert number_to_string(0.0001234567001234567890001234) == '0.0001234567001234567890001234'
 
 # ----------------------------------------------------------------------------
 # testDecimalToPrecisionTruncationToNDigitsAfterDot
