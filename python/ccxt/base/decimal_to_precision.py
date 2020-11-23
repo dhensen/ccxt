@@ -161,9 +161,15 @@ def decimal_to_precision(n, rounding_mode=ROUND, precision=None, counting_mode=D
                     return precise + '.' + precision * '0'
             return precise
 
-
-def number_to_string(x):
+_UNDEFINED = object()
+def number_to_string(x, significant_digits=_UNDEFINED):
     # avoids scientific notation for too large and too small numbers
-    d = decimal.Decimal(str(x))
+    if isinstance(x, float) and significant_digits is not _UNDEFINED:
+        d = decimal.Decimal.from_float(x)
+    else:
+        d = decimal.Decimal(str(x))
     formatted = '{:f}'.format(d)
+    if significant_digits is not _UNDEFINED:
+        assert(isinstance(significant_digits, numbers.Integral))
+        return decimal_to_precision(formatted, TRUNCATE, significant_digits, SIGNIFICANT_DIGITS)
     return formatted.rstrip('0').rstrip('.') if '.' in formatted else formatted

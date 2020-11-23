@@ -11,6 +11,7 @@ sys.path.append(root)
 
 # ----------------------------------------------------------------------------
 
+from decimal import Decimal
 from ccxt.base.decimal_to_precision import decimal_to_precision  # noqa F401
 from ccxt.base.decimal_to_precision import TRUNCATE              # noqa F401
 from ccxt.base.decimal_to_precision import ROUND                 # noqa F401
@@ -98,8 +99,17 @@ assert number_to_string(7.35946e21) == '7359460000000000000000'
 assert number_to_string(0.00000001) == '0.00000001'
 assert number_to_string(1e-7) == '0.0000001'
 assert number_to_string(-1e-7) == '-0.0000001'
-assert number_to_string(0.0001234567001234567890001234) == '0.0001234567001234567890001234'
-
+assert number_to_string(1 / 3) == '0.3333333333333333'
+assert number_to_string(1 / 3, significant_digits=20) == '0.33333333333333331482'
+assert number_to_string(0.0001234567001234567890001234) == '0.0001234567001234568'
+print(number_to_string(0.0001234567001234567890001234, significant_digits=17))
+print(number_to_string(0.0001234567001234567890001234, significant_digits=18))
+print(number_to_string(0.0001234567001234567890001234, significant_digits=19))
+print(number_to_string(0.0001234567001234567890001234, significant_digits=20))
+assert number_to_string(0.0001234567001234567890001234, significant_digits=15) == '0.000123456700123456'
+assert number_to_string(0.0001234567001234567890001234, significant_digits=17) == '0.0001234567001234568'
+                                                                                  #0.00012345670012345680028459371
+                                                                                  #0.00012345670012345680028
 # ----------------------------------------------------------------------------
 # testDecimalToPrecisionTruncationToNDigitsAfterDot
 
